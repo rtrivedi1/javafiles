@@ -1,0 +1,41 @@
+import java.util.*;
+
+public class RoachPop
+{
+  Scanner keyboard = new Scanner(System.in);
+  double initialPop;
+  String name;
+  
+  public RoachPop() //sets initial population to 5
+  {
+    initialPop=10;
+  } 
+  
+  public RoachPop(double firstPop, String name1) //constructs initial population and colony name
+  {
+    initialPop = firstPop;
+    name = name1;
+  }
+  
+  public String getName() //user inputs a colony name
+  {
+    return name;
+  }
+  public void setName(String name1)
+  {
+	  name = name1;
+  }
+  public void spray() //the spray method is used and the population deceases by 10%
+  {
+    initialPop = initialPop - (initialPop*.10); 
+  }
+  public void breed() //the breed method is used and the population increased by 2
+  {
+    initialPop = initialPop * 2;
+  }
+  
+  public double getPop() //this allow user to retrieve the new population
+  {
+    return initialPop;
+  }
+}
