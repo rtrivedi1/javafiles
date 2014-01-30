@@ -17,7 +17,7 @@ public class RoachPop
     name = name1;
   }
   
-  public String getName() //user inputs a colony name
+  public String getName() //user inputs colony name
   {
     return name;
   }
