@@ -1,0 +1,188 @@
+import java.util.*;
+public class RoachMotel
+{ 
+  public static void main (String[] args)
+  {
+    Scanner in = new Scanner(System.in);
+    boolean exit = false;
+    System.out.println("Please enter the number of rooms in the Roach Motel: ");
+    final int NUMBER_OF_ROOMS = in.nextInt(); //user desired number for number of rooms in the motel
+    int menu;
+    int roaches;
+    int choice;
+    int roomnum;
+    String name;
+    String newname;
+    int placeholder = 0; //placeholder is used to create new colony
+    RoachPop[] motel = new RoachPop[NUMBER_OF_ROOMS]; //creates an array based off of number of desired rooms
+    System.out.println("Please choose a menu option: ");
+    do
+    { 
+      System.out.println("---Menu---"); //displays menu option to user
+      System.out.println("1. Create a colony");
+      System.out.println("2. Breed");
+      System.out.println("3. Spray");
+      System.out.println("4. Rename colony");
+      System.out.println("5. Get population");
+      System.out.println("6. Get name");
+      System.out.println("7. Exit");
+      menu = in.nextInt();
+      in.nextLine();
+      switch (menu)
+      {
+        case 1: if (placeholder <= NUMBER_OF_ROOMS) //if number of rooms is greater than desired rooms, then there is enough space (or rooms) for roaches.  
+        {
+          System.out.println("Please enter the amount of roaches: ");
+          roaches = in.nextInt();
+          System.out.println("Please enter a name: ");
+          name = in.next();
+          in.nextLine();
+          motel[placeholder] = new RoachPop(roaches, name); //creates a new RoachPop class object using roach population and name
+          System.out.println(motel[placeholder]);
+          placeholder++; 
+        }
+        else
+        {
+          System.out.println("No vacancy!"); //if number of rooms is not greater than desired rooms, then there is no vacancy  
+        }
+        break;
+        case 2: System.out.println("1. Choose a colony");
+        System.out.println("2. All Colonies");
+        choice = in.nextInt();
+        if (choice == 1)
+        {
+          System.out.println("Please enter the room number: ");
+          roomnum = in.nextInt();
+          motel[roomnum-1].breed(); //breeds the roaches in the desired room; subtracts 1 for proper placement in array
+        }
+        else if (choice == 2)
+        {
+          for (int i = 0; i < placeholder; i++) //breeds the roaches in all rooms
+          {
+            motel[i].breed();
+          }
+        }
+        break;
+        case 3: System.out.println("1. Choose a colony");
+        System.out.println("2. All Colonies");
+        choice = in.nextInt();
+        if (choice == 1)
+        {
+          System.out.println("Please enter the room number: ");
+          roomnum = in.nextInt(); //user inputs room number
+          motel[roomnum-1].spray(); //sprays the roaches in the desired room 
+        }
+        else if (choice == 2)
+        {
+          for (int i = 0; i < placeholder; i++) //sprays the roaches in every room
+          {
+            motel[i].spray();
+          }
+        }
+        break;
+        case 4: System.out.println("1. Choose a colony");
+        System.out.println("2. All Colonies");
+        choice = in.nextInt();
+        if (choice == 1)
+        {
+          System.out.println("Please enter the room number: ");
+          roomnum = in.nextInt();
+          System.out.println("Please enter the new name: ");
+          newname = in.nextLine();
+          motel[roomnum-1].setName(newname); //sets a new name (renames) the colony in the room
+        }
+        else if (choice == 2)
+        {
+          System.out.println("Please enter the new name: ");
+          newname = in.next();
+          for (int i = 0; i < placeholder; i++) //renames all colonies in the rooms
+          {
+            motel[i].setName(newname);
+          }
+        }
+        break;
+        case 5: System.out.println("1. Choose a colony");
+        System.out.println("2. All Colonies");
+        choice = in.nextInt();
+        if (choice == 1)
+        {
+          System.out.println("Please enter the room number: ");
+          roomnum = in.nextInt();
+          System.out.println("There are " + motel[roomnum-1].getPop() + " roaches in Room #" + roomnum + "."); //retrieves and prints roach population according to room number
+        }
+        else if (choice == 2)
+        {
+          for (int i = 0; i < placeholder; i++) //prints the roach population of all rooms
+          {
+            System.out.println("Room #" + (i+1) + " : " + motel[i].getPop());
+          }
+        }
+        break;
+        case 6: System.out.println("1. Choose a colony");
+        System.out.println("2. All Colonies");
+        choice = in.nextInt();
+        if (choice == 1)
+        {
+          System.out.println("Please enter the room number: ");
+          roomnum = in.nextInt();
+          System.out.println("Room #" + roomnum + "'s name is " + motel[roomnum-1].getName()); //prints name of user-specified room
+        }
+        else if (choice == 2)
+        {
+          for (int i = 0; i < placeholder; i++) //if user chooses option 2, program will print name of all names of colonies
+          {
+            System.out.println("Room #" + (i+1) + "'s name is " + motel[i].getName());
+          }
+        }
+        break;
+        case 7: 
+        	System.out.println("Thank you for visiting the roach motel!"); //prompts user a good bye message and exits the loop
+        exit = true;
+        break;
+      }
+    } while (!exit);
+  }
+}
+
+Roach Population Class
+import java.util.*;
+
+public class RoachPop
+{
+  Scanner keyboard = new Scanner(System.in);
+  double initialPop;
+  String name;
+  
+  public RoachPop() //sets initial population to 5
+  {
+    initialPop=10;
+  } 
+  
+  public RoachPop(double firstPop, String name1) //constructs initial population and colony name
+  {
+    initialPop = firstPop;
+    name = name1;
+  }
+  
+  public String getName() //user inputs a colony name
+  {
+    return name;
+  }
+  public void setName(String name1)
+  {
+	  name = name1;
+  }
+  public void spray() //the spray method is used and the population deceases by 10%
+  {
+    initialPop = initialPop - (initialPop*.10); 
+  }
+  public void breed() //the breed method is used and the population increased by 2
+  {
+    initialPop = initialPop * 2;
+  }
+  
+  public double getPop() //this allow user to retrieve the new population
+  {
+    return initialPop;
+  }
+}
