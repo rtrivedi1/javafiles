@@ -1,0 +1,92 @@
+Roaches Menu
+import java.util.*;
+public class RoachesMenu
+{ 
+  public static void main (String[] args)
+  {
+    Scanner key = new Scanner(System.in);
+    String colonyname = "";
+    boolean exit = false; //if exit is false, the loop continues
+    RoachPop colony = null; //constructor is created to set roach population and colony name
+    do
+    {
+      System.out.println("<<<<Menu>>>>");
+      System.out.println("1. Create a Colony");
+      System.out.println("2. Breed");
+      System.out.println("3. Spray");
+      System.out.println("4. Rename the colony");
+      System.out.println("5. Get the population of colony");
+      System.out.println("6. Get the name of colony");
+      System.out.println("7. Exit");
+      int choice = key.nextInt();
+      key.nextLine();
+      switch (choice)
+      {
+        case 1: System.out.println("Enter a name for your colony: ");
+        colonyname = key.nextLine();
+        System.out.println("Enter the starting population for your colony: ");
+        int initialPop = key.nextInt();
+        key.nextLine();
+        colony = new RoachPop(initialPop, colonyname); //this is the RoachPop method used to provide the beginning population
+        System.out.println(colonyname);
+        System.out.println("Starting population: " + initialPop);
+        break;
+        case 2: if (colony == null) 
+          System.out.println("There is currently nothing to breed"); //this statement will appear if the user does not input a roach population
+        else
+        {
+          System.out.println("Breeding in progress"); //this is used to let the user know that the new population will be displayed
+          colony.breed();
+          System.out.println("The new population is " + colony.getPop());
+        }
+        break;
+        case 3: if (colony == null) ////this is used as a default, if the user does not input a population number to spray
+        {
+          System.out.println("There is nothing to spray");
+        }
+        else
+        {
+          System.out.println("Spraying is progress");
+          colony.spray();
+          System.out.println("The new population is " + colony.getPop()); //program will print out the new population
+        }
+        break;
+        case 4: if (colony == null)
+        {
+        	System.out.println("");
+        }
+        else
+        {
+        	System.out.println("What would you like to rename your colony as?");
+        	String update = key.nextLine();
+        	colony.setName(update);
+        	System.out.println("The colony's new name is " + colony.getName()); 
+        }
+        break;
+        case 5: if (colony == null)
+        {
+        	System.out.println("");
+        }
+        else
+        {
+        	System.out.println("The current population is " +colony.getPop());
+        }
+        break;
+        case 6: if (colonyname == "") //"" means if the string length is 0
+        {
+          System.out.println("The colony has no name."); //incase the user skips a step and does not provide a colonyname in the beginning, the program will print out an "error" statement.
+        }
+        else
+        {
+          System.out.println("The name is " + colony.getName()); //the program will print out the colony name
+        }
+        break;
+        case 7: exit = true; 
+        break;
+        default: System.out.println("Not a valid input. Please Try again.");
+        break;
+      }
+    } while (exit == false);
+  }
+}
+
